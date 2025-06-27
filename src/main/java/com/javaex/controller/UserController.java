@@ -15,17 +15,27 @@ public class UserController {
 	@Autowired
 	private UserService serService;
 	
+	//회원가입폼
 	@RequestMapping(value = "/user/joinform", method = {RequestMethod.GET, RequestMethod.POST})
-	public String joinForm(@ModelAttribute UserVO userVO) {
+	public String joinForm() {
 		System.out.println("UserController.joinForm()");
-		System.out.println(userVO);
+		
+		return "user/joinform";
+		
+	}
+	
+	//회원가입
+	@RequestMapping(value = "/user/join", method = {RequestMethod.GET, RequestMethod.POST})
+	public String join(@ModelAttribute UserVO userVO) {
+		System.out.println("UserController.join()");
 		
 		serService.exeJoin(userVO);
 		
-		return "redirect:/user/joinok";
+		return "redirect:joinok";
 		
 	}
 
+	//회원가입성공폼
 	@RequestMapping(value = "/user/joinok", method = {RequestMethod.GET, RequestMethod.POST})
 	public String joinOk() {
 		System.out.println("UserController.joinok()");
