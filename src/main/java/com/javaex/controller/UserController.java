@@ -80,10 +80,10 @@ public class UserController {
 		System.out.println("UserController.logout");
 		
 		//authUser만 날림
-		session.removeAttribute("authUser");
+		//session.removeAttribute("authUser");
 		
 		//전부 날림
-		//session.invalidate();
+		session.invalidate();
 
 		return "redirect:/";
 	}

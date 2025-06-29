@@ -3,5 +3,32 @@
 
 	<mapper namespace="guest">
 	
-		<!-- 방명록 -->
+		<!-- 방명록 리스트 -->
+		<select id="selectList" resultType="com.javaex.vo.GuestVO">
+			<![CDATA[
+				select no
+					, name
+					, content
+				    , reg_date regDate
+				from guestbook
+				order by no desc
+			]]>
+		</select>
+		
+		<!-- 방명록 등록  -->
+		<insert id="insert" parameterType="com.javaex.vo.GuestVO">
+			<![CDATA[
+				insert into guestbook
+				values(null,#{name},#{password},#{content},now())
+			]]>
+		</insert>
+		
+		<!-- 방명록 삭제  -->
+		<delete id="delete" parameterType="com.javaex.vo.GuestVO">
+			<![CDATA[
+			delete from guestbook 
+			where no = #{no}
+			and password = #{password}
+			]]>
+		</delete>
 	</mapper>

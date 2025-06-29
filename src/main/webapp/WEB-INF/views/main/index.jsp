@@ -35,9 +35,7 @@
 			</main>
 		</div>
 
-		<footer>
-			<p>Copyright ⓒ 2025 황일영. All right reserved</p>
-		</footer>
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 	</div>
 </body>
 </html>
