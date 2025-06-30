@@ -110,9 +110,15 @@ public class UserController {
 	public String edit(@ModelAttribute UserVO userVO, HttpSession session) {
 		System.out.println("UserController.edit()");
 		
+		//세션에서 꺼내기
+		UserVO authUser = (UserVO)session.getAttribute("authUser");
+		int no = authUser.getNo();
+		
+		//userVO에 세션에서 꺼낸 no추가
+		userVO.setNo(no);
 		userService.exeEdit(userVO);
 
-		UserVO authUser = userService.exeLogin(userVO);
+		authUser = userService.exeLogin(userVO);
 		session.setAttribute("authUser", authUser);
 		
 		return "redirect:/";
