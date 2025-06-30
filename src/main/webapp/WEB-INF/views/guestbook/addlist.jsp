@@ -90,13 +90,13 @@
 									<tr>
 										<td>${guestVO.no}</td>
 										<td>${guestVO.name}</td>
-										<td>${guestVO.content}</td>
+										<td>${guestVO.regDate}</td>
 										<td class="txt-center">
 											<a class="btn btn-gray btn-sm" href="${pageContext.request.contextPath}/guestbook/removeform?no=${guestVO.no}">삭제</a>
 										</td>
 									</tr>
 									<tr>
-										<td colspan=4>방명록 글입니다. 방명록 글입니다.</td>
+										<td colspan=4>${guestVO.content}</td>
 									</tr>
 								</tbody>
 							</table>

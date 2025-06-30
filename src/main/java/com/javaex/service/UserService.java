@@ -22,7 +22,7 @@ public class UserService {
 
 	}
 	
-	//회원정보 수정(1명정보)
+	//회원정보 수정폼(1명정보)
 	public UserVO exeEditData(int no) {
 		System.out.println("UserService.exeEditData()");
 		

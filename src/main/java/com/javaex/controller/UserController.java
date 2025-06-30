@@ -90,9 +90,14 @@ public class UserController {
 
 	// 회원정보수정폼
 	@RequestMapping(value = "/user/editform", method = { RequestMethod.GET, RequestMethod.POST })
-	public String editForm(@ModelAttribute(value = "no") int no, Model model) {
+	public String editForm(HttpSession session, Model model) {
 		System.out.println("UserController.editform()");
 
+		//세션에서 꺼내기
+		UserVO authUser = (UserVO)session.getAttribute("authUser");
+		int no = authUser.getNo();
+		
+		//수정
 		UserVO userVO = userService.exeEditData(no);
 
 		model.addAttribute("userVO", userVO);
@@ -102,10 +107,13 @@ public class UserController {
 
 	// 회원정보수정
 	@RequestMapping(value = "/user/edit", method = { RequestMethod.GET, RequestMethod.POST })
-	public String edit(@ModelAttribute UserVO userVO) {
+	public String edit(@ModelAttribute UserVO userVO, HttpSession session) {
 		System.out.println("UserController.edit()");
 		
 		userService.exeEdit(userVO);
+
+		UserVO authUser = userService.exeLogin(userVO);
+		session.setAttribute("authUser", authUser);
 		
 		return "redirect:/";
 	}
