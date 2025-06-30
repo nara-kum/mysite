@@ -13,13 +13,14 @@ import com.javaex.vo.UserVO;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
+@RequestMapping(value = "/user")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
 	// 회원가입폼
-	@RequestMapping(value = "/user/joinform", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/joinform", method = { RequestMethod.GET, RequestMethod.POST })
 	public String joinForm() {
 		System.out.println("UserController.joinForm()");
 
@@ -28,7 +29,7 @@ public class UserController {
 	}
 
 	// 회원가입
-	@RequestMapping(value = "/user/join", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/join", method = { RequestMethod.GET, RequestMethod.POST })
 	public String join(@ModelAttribute UserVO userVO) {
 		System.out.println("UserController.join()");
 
@@ -44,7 +45,7 @@ public class UserController {
 	}
 
 	// 회원가입성공
-	@RequestMapping(value = "/user/joinok", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/joinok", method = { RequestMethod.GET, RequestMethod.POST })
 	public String joinOk() {
 		System.out.println("UserController.joinok()");
 
@@ -53,7 +54,7 @@ public class UserController {
 	}
 
 	// 로그인폼
-	@RequestMapping(value = "/user/loginform", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/loginform", method = { RequestMethod.GET, RequestMethod.POST })
 	public String loginForm() {
 		System.out.println("UserController.loginform()");
 
@@ -61,7 +62,7 @@ public class UserController {
 	}
 
 	// 로그인
-	@RequestMapping(value = "/user/login", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(@ModelAttribute UserVO userVO, HttpSession session) {
 		System.out.println("UserController.login()");
 		
@@ -75,7 +76,7 @@ public class UserController {
 	}
 	
 	//로그아웃
-	@RequestMapping(value = "/user/logout", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
 	public String logout(HttpSession session) {
 		System.out.println("UserController.logout");
 		
@@ -89,7 +90,7 @@ public class UserController {
 	}
 
 	// 회원정보수정폼
-	@RequestMapping(value = "/user/editform", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/editform", method = { RequestMethod.GET, RequestMethod.POST })
 	public String editForm(HttpSession session, Model model) {
 		System.out.println("UserController.editform()");
 
@@ -116,7 +117,7 @@ public class UserController {
 	}
 
 	// 회원정보수정
-	@RequestMapping(value = "/user/edit", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/edit", method = { RequestMethod.GET, RequestMethod.POST })
 	public String edit(@ModelAttribute UserVO userVO, HttpSession session) {
 		System.out.println("UserController.edit()");
 		

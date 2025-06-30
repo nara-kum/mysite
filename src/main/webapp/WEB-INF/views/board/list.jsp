@@ -60,20 +60,20 @@
 								<th>관리</th>
 							</tr>
 						</thead>
-							<tbody>
-						<c:forEach items="${requestScope.bList}" var="boardVO">
+						<tbody>
+							<c:forEach items="${requestScope.bList}" var="boardVO">
 								<tr>
 									<td>${boardVO.no}</td>
-									<td class="txt-left"><a href="#">${boardVO.title}</a></td>
+									<td class="txt-left"><a href="${pageContext.request.contextPath}/board/read?no=${boardVO.no}">${boardVO.title}</a></td>
 									<td>${boardVO.name}</td>
 									<td>${boardVO.hit}</td>
 									<td>${boardVO.regDate}</td>
 									<td>
-										<button class="btn btn-white btn-sm" type="button">삭제</button>
+										<button class="btn btn-white btn-sm" type="button"><a href="${pageContext.request.contextPath}/board/writeform">삭제</a></button>
 									</td>
 								</tr>
-						</c:forEach>
-							</tbody>
+							</c:forEach>
+						</tbody>
 					</table>
 					<div class="paging">
 						<ul class="clearfix">
@@ -91,9 +91,12 @@
 							<li><a href="">▶</a></li>
 						</ul>
 					</div>
-					<div class="btn-box">
-						<a class="btn btn-blue btn-md" href="">글쓰기</a>
-					</div>
+					<!-- 세션에 값이 있을때 -->
+					<c:if test="${sessionScope.authUser!=null}">
+						<div class="btn-box">
+							<a class="btn btn-blue btn-md" href="${pageContext.request.contextPath}/board/writeform">글쓰기</a>
+						</div>
+					</c:if>
 				</div>
 
 

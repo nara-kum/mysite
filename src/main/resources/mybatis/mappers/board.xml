@@ -16,6 +16,32 @@
 				from board b
 					, users u
 				where b.user_no = u.no
+				order by reg_date desc
+			]]>
+		</select>
+		
+		<!-- 글등록 -->
+		<insert id="insert" parameterType="com.javaex.vo.BoardVO">
+			<![CDATA[
+				insert into board
+				values(null,#{userNo},#{title},#{content},0,now())
+			]]>
+		</insert>
+		
+		<!-- 선택한 글 내용 가져오기 -->
+		<select id="selectListOne" parameterType="int" resultType="com.javaex.vo.BoardVO">
+			<![CDATA[
+				select b.no
+				    , b.title
+					, b.content
+					, b.hit
+					, b.reg_date regDate
+					, u.no userNo
+					, u.name 
+				from board b
+					, users u
+				where b.user_no = u.no
+				and b.no = #{no}
 			]]>
 		</select>
 	</mapper>
