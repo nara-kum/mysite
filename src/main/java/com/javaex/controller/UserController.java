@@ -93,16 +93,26 @@ public class UserController {
 	public String editForm(HttpSession session, Model model) {
 		System.out.println("UserController.editform()");
 
-		//세션에서 꺼내기
+		//세션값 가져오기
 		UserVO authUser = (UserVO)session.getAttribute("authUser");
-		int no = authUser.getNo();
+
+		//로그인 여부 체크
+		if(authUser==null) {
+			return "redirect:/";
+		}else {
+			
+			//no값 꺼내기
+			int no = authUser.getNo();
+			
+			//수정
+			UserVO userVO = userService.exeEditData(no);
+
+			model.addAttribute("userVO", userVO);
+
+			return "user/editform";
+			
+		}
 		
-		//수정
-		UserVO userVO = userService.exeEditData(no);
-
-		model.addAttribute("userVO", userVO);
-
-		return "user/editform";
 	}
 
 	// 회원정보수정
