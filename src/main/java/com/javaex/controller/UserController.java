@@ -118,8 +118,7 @@ public class UserController {
 		userVO.setNo(no);
 		userService.exeEdit(userVO);
 
-		authUser = userService.exeLogin(userVO);
-		session.setAttribute("authUser", authUser);
+		authUser.setName(userVO.getName());
 		
 		return "redirect:/";
 	}
