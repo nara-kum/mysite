@@ -68,9 +68,9 @@
 					<div class="btn-box">
 						<a class="btn btn-gray btn-md" href="${pageContext.request.contextPath}/board/list">목록</a>
 
-						<!-- 세션에 값이 있을때 -->
-						<c:if test="${sessionScope.authUser!=null}">
-							<a class="btn btn-blue btn-md" href="">수정</a>
+						<!-- 세션no와 글쓴이의 userNo가 같아야 수정버튼 보임 -->
+						<c:if test="${requestScope.boardVO.userNo==sessionScope.authUser.no}">
+							<a class="btn btn-blue btn-md" href="${pageContext.request.contextPath}/board/editform?no=${requestScope.boardVO.no}">수정</a>
 						</c:if>
 					</div>
 

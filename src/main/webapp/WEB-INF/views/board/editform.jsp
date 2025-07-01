@@ -40,42 +40,36 @@
 
 				<div id="board-editform">
 
-					<form class="form-box" action="#" method="get">
+					<form class="form-box" action="${pageContext.request.contextPath}/board/edit" method="get">
 						<!-- 작성자 -->
 						<div class="info-row">
-							<span class="info-title">작성자</span> <span>정우성</span>
+							<span class="info-title">작성자</span> <span>${requestScope.boardVO.name}</span>
 						</div>
 
 						<!-- 조회수 -->
 						<div class="info-row">
-							<span class="info-title">조회수</span> <span>123</span>
+							<span class="info-title">조회수</span> <span>${requestScope.boardVO.hit}</span>
 						</div>
 
 						<!-- 작성일 -->
 						<div class="info-row">
-							<span class="info-title">작성일</span> <span>2020-03-02</span>
+							<span class="info-title">작성일</span> <span>${requestScope.boardVO.regDate}</span>
 						</div>
 
 						<!-- 제목 -->
 						<div class="info-row">
-							<label class="info-title" for="txt-title">제&nbsp;&nbsp;&nbsp;목</label> <input type="text" id="txt-title" name="" value="">
+							<label class="info-title" for="txt-title">제&nbsp;&nbsp;&nbsp;목</label> <input type="text" id="txt-title" name="title" value="${requestScope.boardVO.title}">
 						</div>
 
 						<!-- 내용 -->
 						<div class="info-row">
-							<textarea id="txt-content">여기에는 본문내용이 출력됩니다.
-	여기에는 본문내용이 출력됩니다.
-	여기에는 본문내용이 출력됩니다.
-	여기에는 본문내용이 출력됩니다.
-	여기에는 본문내용이 출력됩니다.
-	여기에는 본문내용이 출력됩니다.
-	여기에는 본문내용이 출력됩니다.
-	여기에는 본문내용이 출력됩니다. </textarea>
+							<textarea id="txt-content" name="content" >${requestScope.boardVO.content}</textarea>
 						</div>
 
 						<div class="btn-box">
-							<a class="btn btn-gray btn-md" href="">목록</a>
-							<button class="btn btn-blue btn-md" type="submit">수정</button>
+							<a class="btn btn-gray btn-md" href="${pageContext.request.contextPath}/board/list">목록</a>
+								<button class="btn btn-blue btn-md" type="submit">수정</button>
+							
 						</div>
 
 					</form>

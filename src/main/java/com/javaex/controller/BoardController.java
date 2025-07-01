@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,11 +34,37 @@ public class BoardController {
 		
 		return "board/list";
 	}
+	
+	//게시판 리스트2(페이징)
+	@RequestMapping(value = "/list2", method = { RequestMethod.GET, RequestMethod.POST })
+	public String list2(@RequestParam(value = "crtpage", required = false, defaultValue = "1") int crtpage, Model model) {
+		System.out.println("BoardController.list2()");
+		
+		Map<String, Object> pMap = boardService.exeList2(crtpage);
+		System.out.println(pMap);
+		model.addAttribute("pMap", pMap);
+		
+		return "board/list2";
+	}
+	
+	//글삭제
+	@RequestMapping(value = "/remove", method = { RequestMethod.GET, RequestMethod.POST })
+	public String remove(@ModelAttribute BoardVO boardVO, HttpSession session) {
+		System.out.println("BoardController.remove()");
+		
+		UserVO authUser = (UserVO)session.getAttribute("authUser");
+		
+		boardVO.setUserNo(authUser.getNo());
+		
+		int count  = boardService.exeRemove(boardVO);
+		
+		return "redirect:list";
+	}
 
 	//게시판 등록폼
 	@RequestMapping(value = "/writeform", method = { RequestMethod.GET, RequestMethod.POST })
-	public String boardWriteForm() {
-		System.out.println("BoardController.boardWriteForm()");
+	public String writeForm() {
+		System.out.println("BoardController.writeForm()");
 		
 		
 		return "board/writeform";
@@ -71,20 +98,23 @@ public class BoardController {
 	
 	//게시판 수정폼
 	@RequestMapping(value = "/editform", method = { RequestMethod.GET, RequestMethod.POST })
-	public String editForm(@ModelAttribute BoardVO boardVO) {
+	public String editForm(@RequestParam(value = "no") int no, Model model) {
 		System.out.println("BoardController.editForm()");
 
-		int count = boardService.exeEditForm(boardVO);
+		BoardVO boardVO = boardService.exeRead(no);
+		
+		model.addAttribute("boardVO",boardVO);
 		
 		return "board/editform";
 	}
 	
-	//게시판 수정
+	//글수정
 	@RequestMapping(value = "/edit")
-	public String boardEdit() {
-		System.out.println("BoardController.boardEdit()");
+	public String edit(@ModelAttribute BoardVO boardVO) {
+		System.out.println("BoardController.edit()");
 		
+		boardService.exeEdit(boardVO);
 		
-		return "";
+		return "redirect:list";
 	}
 }

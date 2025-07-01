@@ -16,9 +16,44 @@
 				from board b
 					, users u
 				where b.user_no = u.no
-				order by reg_date desc
+				order by no desc
 			]]>
 		</select>
+		
+		<!-- 방명록 리스트2(페이징) -->
+		<select id="selectList2" parameterType="map" resultType="com.javaex.vo.BoardVO">
+			<![CDATA[
+				select b.no
+				    , b.title
+					, b.content
+					, b.hit
+					, date_format(b.reg_date,'%Y-%m-%d') regDate
+					, u.no userNo
+					, u.name 
+				from board b
+					, users u
+				where b.user_no = u.no
+				order by no desc
+				limit #{startRowNo}, #{listcnt}
+			]]>
+		</select>
+		
+		<!-- 방명록 리스트2(페이징) -->
+		<select id="selectTotalCount" resultType="int">
+			<![CDATA[
+				select count(*) totcnt
+				from board
+			]]>
+		</select>
+		
+		<!-- 글삭제 -->
+		<delete id="delete" parameterType="com.javaex.vo.BoardVO">
+			<![CDATA[
+				delete from  board
+				where user_no = #{userNo}
+				and no = #{no}
+			]]>
+		</delete>
 		
 		<!-- 글등록 -->
 		<insert id="insert" parameterType="com.javaex.vo.BoardVO">
@@ -44,4 +79,17 @@
 				and b.no = #{no}
 			]]>
 		</select>
+		
+		<!-- 글수정 -->
+		<update id="update" parameterType="com.javaex.vo.BoardVO">
+			<![CDATA[
+			update board
+			set title = #{title}
+				, content = #{content}
+			where user_no = #{userNo}
+			and no= #{no}
+;
+			]]>
+		</update>
+		
 	</mapper>
