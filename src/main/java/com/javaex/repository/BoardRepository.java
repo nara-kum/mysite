@@ -75,6 +75,7 @@ public class BoardRepository {
 	public int updateBoard(BoardVO boardVO){
 		System.out.println("BoardRepository.updateBoard()");
 		
+		System.out.println(boardVO);
 		int count = sqlSession.update("board.update", boardVO);
 		
 		return count;

@@ -44,6 +44,7 @@
 						<!-- 작성자 -->
 						<div class="info-row">
 							<span class="info-title">작성자</span> <span>${requestScope.boardVO.name}</span>
+							<td><input type="hidden" name="no" value="${param.no}"></td>
 						</div>
 
 						<!-- 조회수 -->
@@ -58,18 +59,19 @@
 
 						<!-- 제목 -->
 						<div class="info-row">
-							<label class="info-title" for="txt-title">제&nbsp;&nbsp;&nbsp;목</label> <input type="text" id="txt-title" name="title" value="${requestScope.boardVO.title}">
+							<label class="info-title" for="txt-title">제&nbsp;&nbsp;&nbsp;목</label> <input type="text" id="txt-title" name="title"
+								value="${requestScope.boardVO.title}">
 						</div>
 
 						<!-- 내용 -->
 						<div class="info-row">
-							<textarea id="txt-content" name="content" >${requestScope.boardVO.content}</textarea>
+							<textarea id="txt-content" name="content">${requestScope.boardVO.content}</textarea>
 						</div>
 
 						<div class="btn-box">
 							<a class="btn btn-gray btn-md" href="${pageContext.request.contextPath}/board/list">목록</a>
-								<button class="btn btn-blue btn-md" type="submit">수정</button>
-							
+							<button class="btn btn-blue btn-md" type="submit">수정</button>
+
 						</div>
 
 					</form>
