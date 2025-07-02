@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-	<mapper namespace="board">
-	
-		<!-- 방명록 리스트 -->
-		<select id="selectList" resultType="com.javaex.vo.BoardVO">
+<mapper namespace="board">
+
+	<!-- 게시판 리스트 -->
+	<select id="selectList" resultType="com.javaex.vo.BoardVO">
 			<![CDATA[
 				select b.no
 				    , b.title
@@ -18,10 +18,10 @@
 				where b.user_no = u.no
 				order by no desc
 			]]>
-		</select>
-		
-		<!-- 방명록 리스트2(페이징) -->
-		<select id="selectList2" parameterType="map" resultType="com.javaex.vo.BoardVO">
+	</select>
+
+	<!-- 게시판 리스트2(페이징) -->
+	<select id="selectList2" parameterType="map" resultType="com.javaex.vo.BoardVO">
 			<![CDATA[
 				select b.no
 				    , b.title
@@ -36,35 +36,63 @@
 				order by no desc
 				limit #{startRowNo}, #{listcnt}
 			]]>
-		</select>
-		
-		<!-- 방명록 리스트2(페이징) -->
-		<select id="selectTotalCount" resultType="int">
+	</select>
+
+	<!-- 게시판 리스트2(페이징) -->
+	<select id="selectTotalCount" resultType="int">
 			<![CDATA[
 				select count(*) totcnt
 				from board
 			]]>
-		</select>
-		
-		<!-- 글삭제 -->
-		<delete id="delete" parameterType="com.javaex.vo.BoardVO">
+	</select>
+
+	<!-- 게시판 리스트333(페이징+검색) -->
+	<select id="selectList3" parameterType="map" resultType="com.javaex.vo.BoardVO">
+			<![CDATA[
+				select b.no
+				    , b.title
+					, b.content
+					, b.hit
+					, date_format(b.reg_date,'%Y-%m-%d') regDate
+					, u.no userNo
+					, u.name 
+				from board b
+					, users u
+				where b.user_no = u.no
+			and b.title like concat('%', #{kwd}, '%')
+				order by no desc
+				limit #{startRowNo}, #{listcnt}
+			]]>
+	</select>
+
+	<!-- 게시판 리스트333(페이징+검색) -->
+	<select id="selectKwdTotalCount" parameterType="string" resultType="int">
+			<![CDATA[
+				select count(*) kTotcnt
+				from board
+			    where title like concat('%', #{kwd}, '%')
+			]]>
+	</select>
+
+	<!-- 글삭제 -->
+	<delete id="delete" parameterType="com.javaex.vo.BoardVO">
 			<![CDATA[
 				delete from  board
 				where user_no = #{userNo}
 				and no = #{no}
 			]]>
-		</delete>
-		
-		<!-- 글등록 -->
-		<insert id="insert" parameterType="com.javaex.vo.BoardVO">
+	</delete>
+
+	<!-- 글등록 -->
+	<insert id="insert" parameterType="com.javaex.vo.BoardVO">
 			<![CDATA[
 				insert into board
 				values(null,#{userNo},#{title},#{content},0,now())
 			]]>
-		</insert>
-		
-		<!-- 선택한 글 내용 가져오기 -->
-		<select id="selectListOne" parameterType="int" resultType="com.javaex.vo.BoardVO">
+	</insert>
+
+	<!-- 선택한 글 내용 가져오기 -->
+	<select id="selectListOne" parameterType="int" resultType="com.javaex.vo.BoardVO">
 			<![CDATA[
 				select b.no
 				    , b.title
@@ -78,10 +106,10 @@
 				where b.user_no = u.no
 				and b.no = #{no}
 			]]>
-		</select>
-		
-		<!-- 글수정 -->
-		<update id="update" parameterType="com.javaex.vo.BoardVO">
+	</select>
+
+	<!-- 글수정 -->
+	<update id="update" parameterType="com.javaex.vo.BoardVO">
 			<![CDATA[
 			update board
 			set title = #{title}
@@ -90,6 +118,6 @@
 			and no= #{no}
 ;
 			]]>
-		</update>
-		
-	</mapper>
+	</update>
+
+</mapper>

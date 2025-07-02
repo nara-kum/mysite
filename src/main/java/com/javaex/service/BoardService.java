@@ -26,14 +26,14 @@ public class BoardService {
 	}
 	
 	//게시판리스트전체2(페이징)
-	public Map<String, Object> exeList2(int crtpage){
+	public Map<String, Object> exeList2(int crtPage){
 		System.out.println("BoardService.exeList2()");
 		
 		/********************리스트 가져오기********************/
 		//한페이지 출력갯수
 		int listcnt = 10;
 		//글 시작번호
-		int startRowNo = (crtpage -1)*listcnt ;
+		int startRowNo = (crtPage -1)*listcnt ;
 		
 		//두 데이터를 map으로 묶는다
 		Map<String, Integer> limitMap= new HashMap<String, Integer>();
@@ -50,7 +50,7 @@ public class BoardService {
 		int pgaeBtncount = 5;
 
 		//페이지의 마지막 버튼 번호
-		int endPageBtnNo = ((int)Math.ceil(crtpage/((double)pgaeBtncount)))*pgaeBtncount;
+		int endPageBtnNo = ((int)Math.ceil(crtPage/((double)pgaeBtncount)))*pgaeBtncount;
 		
 		//페이지의 시작 버튼 번호
 		int startPgaeBtnNo = (endPageBtnNo-pgaeBtncount)+ 1;
@@ -63,6 +63,70 @@ public class BoardService {
 			next = true;
 		}else {//마지막 버튼 번호 다시 계산
 			endPageBtnNo = (int)Math.ceil(totcnt/((double)listcnt));
+		}
+		
+		//이전 화살표 유무
+		boolean prev = false;
+		if(startPgaeBtnNo!=1) {
+			prev = true;
+		}
+		
+
+		/********************모두 묶어서 컨트롤러에 리턴********************/
+		Map<String, Object> pMap = new HashMap<String, Object>();
+		
+		pMap.put("bList", bList);					//리스트
+		pMap.put("prev", prev);						//이전버튼유무
+		pMap.put("next", next);						//다음버튼유무
+		pMap.put("startPgaeBtnNo", startPgaeBtnNo);	//시작버튼번호
+		pMap.put("endPageBtnNo", endPageBtnNo);		//마지막버튼번호
+		
+		return pMap;
+	}
+	
+
+	//------------게시판 리스트333(페이징+검색)-----------------
+	public Map<String, Object> exeList3(int crtPage, String kwd){
+		System.out.println("BoardService.exeList3()");
+		
+		/********************리스트 가져오기********************/
+		//한페이지 출력갯수
+		int listcnt = 10;
+		//글 시작번호
+		int startRowNo = (crtPage -1)*listcnt ;
+		
+		//두 데이터를 map으로 묶는다
+		Map<String, Object> limitMap= new HashMap<String, Object>();
+		limitMap.put("startRowNo", startRowNo);
+		limitMap.put("listcnt", listcnt);;
+		limitMap.put("kwd", kwd);
+		
+		//레파지토리로 보낸다
+		List<BoardVO> bList = boardRepository.selectList3(limitMap);
+		
+		
+		/********************페이징 버튼********************/
+		
+		//페이지당 버튼 갯수
+		int pgaeBtncount = 5;
+
+		//페이지의 마지막 버튼 번호
+		int endPageBtnNo = ((int)Math.ceil(crtPage/((double)pgaeBtncount)))*pgaeBtncount;
+		
+		//페이지의 시작 버튼 번호
+		int startPgaeBtnNo = (endPageBtnNo-pgaeBtncount)+ 1;
+		
+		//전체 건수
+		int totcnt = boardRepository.selectTotalCount();
+		//kwd건수
+		int kTotcnt = boardRepository.selectKwdTotalCount(kwd);
+		
+		//다음 화살표 유무
+		boolean next = false;
+		if(listcnt*endPageBtnNo < kTotcnt) {
+			next = true;
+		}else {//마지막 버튼 번호 다시 계산
+			endPageBtnNo = (int)Math.ceil(kTotcnt/((double)listcnt));
 		}
 		
 		//이전 화살표 유무

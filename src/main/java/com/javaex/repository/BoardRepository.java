@@ -42,6 +42,24 @@ public class BoardRepository {
 		return totcnt;
 	}
 	
+	//------------게시판 리스트333(페이징+검색)-----------------
+	public List<BoardVO> selectList3(Map<String, Object> limitMap){
+		System.out.println("BoardRepository.selectList2()");
+
+		List<BoardVO> bList = sqlSession.selectList("board.selectList3",limitMap);
+		
+		return bList;
+	}
+	
+	//개시판 검색 전체 갯수
+	public int selectKwdTotalCount(String kwd) {
+		System.out.println("BoardRepository.selectKwdTotalCount()");
+		
+		int kTotcnt = sqlSession.selectOne("board.selectKwdTotalCount",kwd);
+		
+		return kTotcnt;
+	}
+	
 	//글삭제
 	public int deleteBoard(BoardVO boardVO) {
 		System.out.println("deleteBoard.deleteBoard()");

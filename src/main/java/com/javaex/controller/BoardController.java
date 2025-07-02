@@ -26,31 +26,39 @@ public class BoardController {
 
 	// 게시판 리스트
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public String list(@RequestParam(value = "crtpage", required = false, defaultValue = "1") int crtpage, Model model) {
-		System.out.println("BoardController.list2()");
-
-		Map<String, Object> pMap = boardService.exeList2(crtpage);
-		System.out.println(pMap);
-		model.addAttribute("pMap", pMap);
-
-//		System.out.println("BoardController.list()");
-//		
-//		List<BoardVO> bList = boardService.exeList();
-//		model.addAttribute("bList",bList);
+	public String list( Model model) {
+		System.out.println("BoardController.list()");
+		
+		List<BoardVO> bList = boardService.exeList();
+		model.addAttribute("bList",bList);
+		System.out.println(bList);
 
 		return "board/list";
 	}
 
 	// 게시판 리스트2(페이징)
 	@RequestMapping(value = "/list2", method = { RequestMethod.GET, RequestMethod.POST })
-	public String list2(@RequestParam(value = "crtpage", required = false, defaultValue = "1") int crtpage, Model model) {
+	public String list2(@RequestParam(value = "crtpage", required = false, defaultValue = "1") int crtPage, Model model) {
 		System.out.println("BoardController.list2()");
 
-		Map<String, Object> pMap = boardService.exeList2(crtpage);
-		System.out.println(pMap);
+		Map<String, Object> pMap = boardService.exeList2(crtPage);
+		
 		model.addAttribute("pMap", pMap);
 
 		return "board/list2";
+	}
+
+	//------------게시판 리스트333(페이징+검색)-----------------
+	@RequestMapping(value = "/list3", method = { RequestMethod.GET, RequestMethod.POST })
+	public String list3(@RequestParam(value = "crtpage", required = false, defaultValue = "1") int crtPage, 
+						@RequestParam(value = "kwd", required = false, defaultValue = "") String kwd, Model model) {
+		System.out.println("BoardController.list3()");
+		
+		Map<String, Object> pMap = boardService.exeList3(crtPage, kwd);
+		
+		model.addAttribute("pMap", pMap);
+
+		return "board/list3";
 	}
 
 	// 글삭제
