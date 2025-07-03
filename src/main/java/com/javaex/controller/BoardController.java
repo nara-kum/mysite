@@ -134,4 +134,15 @@ public class BoardController {
 
 		return "redirect:list";
 	}
+	
+
+	//------------게층형 게시판-----------------
+	@RequestMapping(value = "/rlist", method = { RequestMethod.GET, RequestMethod.POST })
+	public String rList( Model model) {
+		System.out.println("BoardController.rList()");
+
+		boardService.exeRlist();
+		
+		return "";
+	}
 }

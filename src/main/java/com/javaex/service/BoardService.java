@@ -183,5 +183,15 @@ public class BoardService {
 		
 		return count;
 	}
+	
+
+	//게시판리스트전체
+	public List<BoardVO> exeRlist(){
+		System.out.println("BoardService.exeRlist()");
+		
+		List<BoardVO> bList = boardRepository.selectRlist();
+		
+		return bList;
+	}
 
 }

@@ -98,5 +98,13 @@ public class BoardRepository {
 		
 		return count;
 	}
+	
+
+	//게시판 전체 리스트
+	public List<BoardVO> selectRlist(){
+		System.out.println("BoardRepository.selectRlist()");
+		
+		return null;
+	}
 
 }

@@ -21,13 +21,13 @@ public class MainController {
 		return "main/index";
 	}
 	
-	@RequestMapping(value="/{id}", method = {RequestMethod.GET, RequestMethod.POST})
-	public String index2(@PathVariable(value = "id") String id) {
-		System.out.println("MainController.index2()");
-		
-		System.out.println(id+"회원");
-		
-		return "main/index";
-	}
+//	@RequestMapping(value="/{id}", method = {RequestMethod.GET, RequestMethod.POST})
+//	public String index2(@PathVariable(value = "id") String id) {
+//		System.out.println("MainController.index2()");
+//		
+//		System.out.println(id+"회원");
+//		
+//		return "main/index";
+//	}
 
 }
