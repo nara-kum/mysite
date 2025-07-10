@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reset.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mysite.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css">
+<script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-3.7.1.js"></script>
 </head>
 
 <body>
@@ -43,7 +44,8 @@
 					<form class="form-box" action="${pageContext.request.contextPath}/user/join" method="get">
 						<div class="info-row">
 							<label class="info-title" for="txt-idcheck">아이디</label> <input id="txt-idcheck" type="text" name="id" value="">
-							<button id="" class="btn btn-gray btn-input" type="button">중복체크</button>
+							<button id="btnCheck" class="btn btn-gray btn-input" type="button">중복체크</button>
+							<span id="checkMsg"></span>
 						</div>
 						<div class="info-row">
 							<label class="info-title" for="txt-pwd">패스워드</label> <input id="txt-pwd" type="password" name="password" value="">
@@ -73,6 +75,46 @@
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 
 	</div>
+	
+<script>
+	$(document).ready(function(){
+		console.log('돔');
 
+		$('#btnCheck').on('click',function(){
+			console.log('중복체크');
+
+			let id = $('#txt-idcheck').val();
+			console.log(id);
+
+			//서버통신 --> 데이터만 받을거야
+			$.ajax({
+				
+				//보낼때 옵션
+				url : "${pageContext.request.contextPath}/user/idcheck",		
+				type : "post",
+				//contentType : "application/json",
+				data : {id: id},
+
+				//받을때 옵션
+				dataType : "json",
+				success : function(result){
+					/*성공시 처리해야될 코드 작성*/
+					console.log(result);
+					console.log(result.isUse);
+					if(result.isUse==true){
+						$('#checkMsg').text('사용가능').css('color','#0000ff').css('font-weight','bold');
+					}else {
+						$('#checkMsg').text('사용불가').css('color','#ff0000').css('font-weight','bold');
+					}
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+
+		});
+		
+	});
+</script>
 </body>
 </html>

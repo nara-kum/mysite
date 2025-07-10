@@ -22,11 +22,27 @@ public class UserService {
 
 	}
 	
+	//아이디 중복체크
+	public boolean exeIdcheck(String id){
+		System.out.println("UserService.exeIdcheck()");
+		
+		UserVO userVO = userRepository.userSelectById(id);
+		System.out.println(userVO);
+		
+		if(userVO==null) {
+			//사용가능 아이디
+			return true;
+		}else {
+			//사용 블가 아이디
+			return false;
+		}
+	}
+	
 	//회원정보 수정폼(1명정보)
 	public UserVO exeEditData(int no) {
 		System.out.println("UserService.exeEditData()");
 		
-		UserVO userVO = userRepository.userSelectOne(no);
+		UserVO userVO = userRepository.userSelectByNo(no);
 		
 		return userVO;
 

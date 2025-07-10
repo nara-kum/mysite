@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.UserVO;
@@ -27,6 +29,26 @@ public class UserController {
 		return "user/joinform";
 
 	}
+	
+	//회원가입폼-아이디 중복체크 -->데이터만 응답
+	@ResponseBody
+	@RequestMapping(value = "/idcheck", method = { RequestMethod.GET, RequestMethod.POST })
+	public String idCheck(@RequestParam(value="id") String id) {
+		System.out.println("UserController.idcheck()");
+		
+		boolean isUse = userService.exeIdcheck(id);
+		System.out.println(isUse);
+		
+		//response body에 보내줘야 함
+		String result = "{\"isUse\":" +isUse+ "}" ;
+		System.out.println(result);
+		
+		//jsp에 전달하는 것임
+		//model.addAttribute("isUse",isUse);
+		
+		return result;
+	}
+	
 
 	// 회원가입
 	@RequestMapping(value = "/join", method = { RequestMethod.GET, RequestMethod.POST })

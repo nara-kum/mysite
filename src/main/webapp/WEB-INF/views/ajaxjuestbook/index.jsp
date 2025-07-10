@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reset.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mysite.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/guestbook.css">
+<script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-3.7.1.js"></script>
 </head>
 
 
@@ -49,7 +50,8 @@
 							</colgroup>
 							<tbody>
 								<tr>
-									<th><label for="txt-name">이름</label></th>
+									<th><label for="txt-name">이름</label>
+									</th>
 									<td><input id="txt-name" type="text" name="name" value=""></td>
 									<th><label for="txt-password">패스워드</label></th>
 									<td><input id="txt-password" type="password" name="password" value=""></td>
@@ -66,6 +68,12 @@
 
 						</table>
 					</form>
+					<button id="btnList" class="btn btn-blue btn-md" type="button">전체 데이터 요청</button>
+					
+					<div id="gbListArea">
+					
+					
+					</div>
 
 					<c:forEach items="${requestScope.gList}" var="guestVO">
 						<table class="guestbook-item">
@@ -96,6 +104,71 @@
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 
 	</div>
+<script>
+	$(document).ready(function(){
+		console.log('돔');
 
+		$('#btnList').on('click',function(){
+			console.log('전체 데이터 리스트');
+		
+			fetchList();
+		});
+	});
+
+	function fetchList(){
+		$.ajax({
+			
+			//보낼때 옵션
+			url : "${pageContext.request.contextPath}/api/guestbook/list",
+			type : "post",
+			// contentType : "application/json",
+			// data : {id: id},
+
+			//받을때 옵션
+			dataType : "json",
+			success : function(guestVO){
+				/*성공시 처리해야될 코드 작성*/
+				// console.log(guestVO);
+
+				//화면에 그린다
+				for(let i=0; i<guestVO.length; i++){
+					rander(guestVO[i]);
+				}
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	};
+
+	function rander(guestVO){
+		console.log(guestVO);
+		console.log('그린다');
+
+		let str = '';
+		str += '<table>';
+		str += '	<colgroup>';
+		str += '		<col style="width: 10%;">';
+		str += '		<col style="width: 40%;">';
+		str += '		<col style="width: 40%;">';
+		str += '		<col style="width: 10%;">';
+		str += '	</colgroup>';
+		str += '	<tbody>';
+		str += '		<tr>';
+		str += '			<td>' + guestVO.no + '</td>';
+		str += '			<td>' + guestVO.name + '</td>';
+		str += '			<td>' + guestVO.regDate + '</td>';
+		str += '			<td class="txt-center"><a class="btn btn-gray btn-sm" href="">삭제</a></td>';
+		str += '		</tr>';
+		str += '		<tr>';
+		str += '			<td colspan=4>' + guestVO.content + '</td>';
+		str += '		</tr>';
+		str += '	</tbody>';
+		str += '</table>';
+		
+		$('#gbListArea').append(str);
+	};
+</script>
 </body>
 </html>

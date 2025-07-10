@@ -21,11 +21,20 @@ public class UserRepository {
 		return count;
 	}
 	
-	//회원정보 수정폼(1명데이터)
-	public UserVO userSelectOne(int no) {
-		System.out.println("UserRepository.userSelectOne()");
+	//아이디 중복체크
+	public UserVO userSelectById(String id){
+		System.out.println("UserRepository.userSelectById()");
 		
-		UserVO userVO = sqlSession.selectOne("user.selectOne",no);
+		UserVO userVO = sqlSession.selectOne("user.SelectById",id);
+		
+		return userVO;
+	}
+	
+	//회원정보 수정폼(1명데이터)
+	public UserVO userSelectByNo(int no) {
+		System.out.println("UserRepository.userSelectByNo()");
+		
+		UserVO userVO = sqlSession.selectOne("user.selectByNo",no);
 		
 		return userVO;
 		

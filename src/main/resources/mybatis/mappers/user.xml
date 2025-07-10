@@ -12,7 +12,19 @@
 			</insert>
 			
 		<!-- 회원정보수정폼 -->
-			<select id="selectOne" parameterType="int" resultType="com.javaex.vo.UserVO">
+			<select id="SelectById" parameterType="string" resultType="com.javaex.vo.UserVO">
+				<![CDATA[
+					select no
+						, id
+					    , name
+					    , gender
+					from users
+					where id = #{id}
+				]]>
+			</select>
+			
+		<!-- 회원정보수정폼 -->
+			<select id="selectByNo" parameterType="int" resultType="com.javaex.vo.UserVO">
 				<![CDATA[
 					select id
 						, password
