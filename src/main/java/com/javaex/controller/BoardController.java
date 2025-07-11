@@ -137,12 +137,59 @@ public class BoardController {
 	
 
 	//------------게층형 게시판-----------------
-	@RequestMapping(value = "/rlist", method = { RequestMethod.GET, RequestMethod.POST })
-	public String rList( Model model) {
-		System.out.println("BoardController.rList()");
+	//계층형 게시판 리스트
+	@RequestMapping(value = "/relist", method = { RequestMethod.GET, RequestMethod.POST })
+	public String reList( Model model) {
+		System.out.println("BoardController.relist()");
 
-		boardService.exeRlist();
+		List<BoardVO> bList = boardService.exeRelist();
+		model.addAttribute("bList",bList);
+		System.out.println(bList);
+		return "board/relist";
+	}
+
+	//계층형 게시판 글등록 폼
+	@RequestMapping(value = "/rewriteform", method = { RequestMethod.GET, RequestMethod.POST })
+	public String reWriteForm() {
+		System.out.println("BoardController.reWriteForm()");
+
+		return "board/rewriteform";
+	}
+
+	//계층형 계시판 글등록 등록
+	@RequestMapping(value = "/rewrite", method = { RequestMethod.GET, RequestMethod.POST })
+	public String reWrite(@ModelAttribute BoardVO boardVO, HttpSession session) {
+		System.out.println("BoardController.reWrite()");
+
+		UserVO authUser = (UserVO) session.getAttribute("authUser");
+
+		boardVO.setUserNo(authUser.getNo());
 		
-		return "";
+		int count = boardService.exeRewrite(boardVO);
+
+		return "redirect:relist";
+	}
+
+	//댓글등록 폼
+	@RequestMapping(value = "/rwriteform", method = { RequestMethod.GET, RequestMethod.POST })
+	public String rWriteForm() {
+		System.out.println("BoardController.rWriteForm()");
+		
+
+		return "board/rwriteform";
+	}
+
+	//댓글 등록
+	@RequestMapping(value = "/rwrite", method = { RequestMethod.GET, RequestMethod.POST })
+	public String rWrite(@ModelAttribute BoardVO boardVO, HttpSession session) {
+		System.out.println("BoardController.rWrite()");
+
+		UserVO authUser = (UserVO) session.getAttribute("authUser");
+
+		boardVO.setUserNo(authUser.getNo());
+		
+		int count = boardService.exeRwrite(boardVO);
+
+		return "redirect:relist";
 	}
 }

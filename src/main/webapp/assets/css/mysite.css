@@ -229,7 +229,7 @@ footer p{
 
 /* 버튼크기 *********/
 .btn-sm {      /* 로그인 회원가입등*/
-    min-width: 50px;
+    min-width: 30px;
     padding: 5px 5px 5px 5px;
     font-size: 10px;
     vertical-align: middle;

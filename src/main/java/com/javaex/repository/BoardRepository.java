@@ -101,10 +101,50 @@ public class BoardRepository {
 	
 
 	//게시판 전체 리스트
-	public List<BoardVO> selectRlist(){
-		System.out.println("BoardRepository.selectRlist()");
+	public List<BoardVO> selectRelist(){
+		System.out.println("BoardRepository.selectRelist()");
 		
-		return null;
+		List<BoardVO> bList = sqlSession.selectList("board.selectRelist");
+		
+		return bList;
+	}
+	
+	//계층형 게시판 글 등록
+	public int insertReboard(BoardVO boardVO){
+		System.out.println("BoardRepository.insertReboard()");
+
+		int count = sqlSession.insert("board.insertReboard", boardVO);
+		
+		return count;
+	}
+	
+	//계층형 게시판 댓글 등록시 본글 그룹넘 업데이트
+	public int updateReboard(int no){
+		System.out.println("BoardRepository.updateReboard()");
+
+		int count = sqlSession.update("board.updateReboard", no);
+		
+		return count;
+	}
+
+	//계층형 게시판 댓글 동일그룹 update
+	public int updateRboard(BoardVO boardVO){
+		System.out.println("BoardRepository.updateRboard()");
+
+		System.out.println(boardVO);
+		sqlSession.update("board.updateRboard", boardVO);
+		
+		return 0;
+	}
+
+	//계층형 게시판 댓글 등록
+	public int insertRboard(BoardVO boardVO){
+		System.out.println("BoardRepository.insertRboard()");
+
+		System.out.println(boardVO);
+		sqlSession.insert("board.insertRboard", boardVO);
+		
+		return 0;
 	}
 
 }

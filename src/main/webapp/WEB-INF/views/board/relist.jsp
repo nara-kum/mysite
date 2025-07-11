@@ -22,17 +22,17 @@
 				<h2>게시판</h2>
 				<ul>
 					<li><a href="${pageContext.request.contextPath}/board/list3">일반게시판</a></li>
-					<li><a href="">댓글게시판</a></li>
+					<li><a href="${pageContext.request.contextPath}/board/relist">댓글게시판</a></li>
 				</ul>
 			</aside>
 
 			<main>
 				<div class="main-head clearfix">
-					<h3>일반게시판</h3>
+					<h3>댓글게시판</h3>
 					<ol class="clearfix">
 						<li>홈</li>
 						<li>게시판</li>
-						<li>일반게시판</li>
+						<li>댓글게시판</li>
 					</ol>
 				</div>
 
@@ -61,20 +61,29 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${requestScope.pMap.bList}" var="boardVO">
+							<c:forEach items="${requestScope.bList}" var="boardVO">
 								<tr>
 									<td>${boardVO.no}</td>
-									<td class="txt-left"><a href="${pageContext.request.contextPath}/board/read?no=${boardVO.no}">${boardVO.title}</a></td>
+									<td class="txt-left"><a href="${pageContext.request.contextPath}/board/reread?no=${boardVO.no}">${boardVO.title}</a></td>
 									<td>${boardVO.name}</td>
 									<td>${boardVO.hit}</td>
 									<td>${boardVO.regDate}</td>
 									<td>
-										<!-- 세션에 값이 있을때 -->
-										<c:if test="${boardVO.userNo==sessionScope.authUser.no}">
+										<!-- 내가 쓴 글일때 --> <c:if test="${boardVO.userNo==sessionScope.authUser.no}">
 											<button class="btn btn-white btn-sm" type="button">
 												<a href="${pageContext.request.contextPath}/board/remove?no=${boardVO.no}">삭제</a>
 											</button>
 										</c:if>
+										<button class="btn btn-white btn-sm" type="button">
+											<!-- 세션에 값이 있을때 -->
+											<c:if test="${sessionScope.authUser!=null }">
+												<a href="${pageContext.request.contextPath}/board/rwriteform?no=${boardVO.no}">댓글</a>
+											</c:if>
+											<!-- 세션에 값이 없을때 -->
+											<c:if test="${sessionScope.authUser==null}">
+												<a href="${pageContext.request.contextPath}/user/loginform">댓글</a>
+											</c:if>
+										</button>
 									</td>
 								</tr>
 							</c:forEach>
@@ -82,30 +91,19 @@
 					</table>
 					<div class="paging">
 						<ul class="clearfix">
-							<c:if test="${requestScope.pMap.prev}">
-								<li><a href="${pageContext.request.contextPath}/board/list3?crtpage=${requestScope.pMap.startPgaeBtnNo-1}&kwd=${param.kwd}">◀</a></li>
-							</c:if>
-
-							<c:forEach begin="${requestScope.pMap.startPgaeBtnNo}" end="${requestScope.pMap.endPageBtnNo}" step="1" var="page">
-								<c:choose>
-									<c:when test="${param.crtpage==page}">
-										<li class="active"><a href="${pageContext.request.contextPath}/board/list3?crtpage=${page}&kwd=${param.kwd}">${page}</a></li>
-									</c:when>
-									<c:otherwise>
-										<li><a href="${pageContext.request.contextPath}/board/list3?crtpage=${page}&kwd=${param.kwd}">${page}</a></li>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-
-							<c:if test="${requestScope.pMap.next}">
-								<li><a href="${pageContext.request.contextPath}/board/list3?crtpage=${requestScope.pMap.endPageBtnNo+1}&kwd=${param.kwd}">▶</a></li>
-							</c:if>
+							<li><a href="">◀</a></li>
+							<li><a href="">1</a></li>
+							<li><a href="">2</a></li>
+							<li class="active"><a href="">3</a></li>
+							<li><a href="">4</a></li>
+							<li><a href="">5</a></li>
+							<li><a href="">▶</a></li>
 						</ul>
 					</div>
 					<!-- 세션에 값이 있을때 -->
 					<c:if test="${sessionScope.authUser!=null}">
 						<div class="btn-box">
-							<a class="btn btn-blue btn-md" href="${pageContext.request.contextPath}/board/writeform">글쓰기</a>
+							<a class="btn btn-blue btn-md" href="${pageContext.request.contextPath}/board/rewriteform">글쓰기</a>
 						</div>
 					</c:if>
 				</div>

@@ -186,12 +186,40 @@ public class BoardService {
 	
 
 	//게시판리스트전체
-	public List<BoardVO> exeRlist(){
-		System.out.println("BoardService.exeRlist()");
+	public List<BoardVO> exeRelist(){
+		System.out.println("BoardService.exeRelist()");
 		
-		List<BoardVO> bList = boardRepository.selectRlist();
+		List<BoardVO> bList = boardRepository.selectRelist();
 		
 		return bList;
+	}
+	
+	//계층형 계시판 글 등록
+	public int exeRewrite(BoardVO boardVO){
+		System.out.println("BoardService.exeRewrite()");
+		
+		//본글 등록
+		int count = boardRepository.insertReboard(boardVO);
+		System.out.println(boardVO);
+		
+		//본글 groupNo 업데이트
+		boardRepository.updateReboard(boardVO.getNo());
+		System.out.println(boardVO);
+		
+		return count;
+	}
+	
+	//계층형 계시판 댓글 등록
+	public int exeRwrite(BoardVO boardVO){
+		System.out.println("BoardService.exeRwrite()");
+		
+		//부모의 그룹넘, 오더넘, 뎁스를 받아온다
+		
+		//댓글등록시
+		//1(부모글 오더넘  + 1) 과 같거나 큰 글들의 오더넘에 모두 +1 업데이트
+		//2.부모의 그룹넘, (부모글 오더넘  + 1), (부모글 뎁스 + 1) 로 인서트 한다.		
+		
+		return 0;
 	}
 
 }
