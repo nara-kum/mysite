@@ -19,6 +19,7 @@ public class GuestbookApiController {
 	@Autowired
 	private GuestbookService guestbookService;
 
+	//방명록 리스트
 	@ResponseBody
 	@RequestMapping(value = "/api/guestbook/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public List<GuestVO> list() {
@@ -30,6 +31,7 @@ public class GuestbookApiController {
 		return gList;
 	}
 
+	//방명록 추가
 	@ResponseBody
 	@RequestMapping(value = "/api/guestbook/add", method = { RequestMethod.GET, RequestMethod.POST })
 	public GuestVO add(@ModelAttribute GuestVO guestVO) {
@@ -40,6 +42,18 @@ public class GuestbookApiController {
 		GuestVO gVO = guestbookService.exeAddKey(guestVO);
 
 		return gVO;
+	}
+
+	//방명록 삭제
+	@ResponseBody
+	@RequestMapping(value = "/api/guestbook/remove", method = { RequestMethod.GET, RequestMethod.POST })
+	public int remove(@ModelAttribute GuestVO guestVO) {
+		System.out.println("GuestbookApiController.remove()");
+		System.out.println(guestVO);
+
+		int count = guestbookService.exeRemove(guestVO);
+		
+		return count;
 	}
 
 }

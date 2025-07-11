@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reset.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mysite.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/guestbook.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/modal.css">
 <script src="${pageContext.request.contextPath}/assets/js/jquery/jquery-3.7.1.js"></script>
 </head>
 
@@ -71,7 +72,6 @@
 					
 					<div id="gbListArea">
 					
-					
 					</div>
 
 					<c:forEach items="${requestScope.gList}" var="guestVO">
@@ -103,6 +103,26 @@
 		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 
 	</div>
+<!-------------------------------------------------------------------------->
+<!-- 모달창 -->
+<div class="modal-bg">
+
+	<div class="modal-content">
+		<p>비밀번호를 입력해 주세요</p>
+
+		<form id="modalForm" action="" method="">
+			<div>
+				<input id="text-password" type="password" name="password" value="">
+				<input id="txt-no" type="text" name="no">
+			</div>
+			<button type="submit" class="btn-del btn btn-blue btn-md">삭제</button>
+			<button class="btn-close btn btn-gray btn-md">닫기</button>
+		</form>
+	</div>
+
+</div>
+
+<!-------------------------------------------------------------------------->
 <script>
 	$(document).ready(function(){
 		console.log('돔');
@@ -150,6 +170,78 @@
 				}
 			});
 		});
+
+		//삭제버튼 클릭했을때 -->모달창 띄우기
+		$('#gbListArea').on('click','.btn-modal',function(){
+			console.log('모달창');
+
+			$('.modal-bg').addClass('active');
+
+			//내가 가지고 있는 no값을 모달창 no값 박스에 넣는다
+			let $this = $(this);
+			let no = $this.data('no');
+			console.log(no);
+
+			//번호 추가
+			$('#txt-no').val(no);
+			
+			//비밀번호 값 지우기
+			$('#text-password').val('');
+		});
+
+		//모달창의 닫기 버튼을 클릭했을때 -->모달창 닫기
+		$('.btn-close').on('click',function(){
+			console.log('모달창닫기');
+			
+			$('#txt-password').val('');
+
+			$('.modal-bg').removeClass('active')
+		});
+
+		//모달창의 삭제 진짜 삭제
+		$('#modalForm').on('submit',function(event){
+			console.log('모달창삭제');
+
+			event.preventDefault();
+
+			//데이터 수집
+
+			let password = $('#text-password').val();
+			let no = $('#txt-no').val();
+
+			let guestVO = {
+				password: password,
+				no: no
+			};
+		
+			$.ajax({
+			
+				//보낼때 옵션
+				url : "${pageContext.request.contextPath}/api/guestbook/remove",
+				type : "post",
+				// contentType : "application/json",
+				data : guestVO,
+
+				//받을때 옵션
+				dataType : "json",
+				success : function(result){
+					/*성공시 처리해야될 코드 작성*/
+					console.log(result);
+
+					if(result==1){
+						//화면에서 지우기
+						$('#t'+no).remove();
+					}
+					
+					$('.modal-bg').removeClass('active');
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+
+		});
+
 	});
 
 	function fetchList(){
@@ -184,7 +276,7 @@
 		console.log('그린다');
 
 		let str = '';
-		str += '<table>';
+		str += '<table id=t' + guestVO.no + '>';
 		str += '	<colgroup>';
 		str += '		<col style="width: 10%;">';
 		str += '		<col style="width: 40%;">';
@@ -196,7 +288,9 @@
 		str += '			<td>' + guestVO.no + '</td>';
 		str += '			<td>' + guestVO.name + '</td>';
 		str += '			<td>' + guestVO.regDate + '</td>';
-		str += '			<td class="txt-center"><a class="btn btn-gray btn-sm" href="">삭제</a></td>';
+		str += '			<td class="txt-center">';
+		str += '				<button class="btn-modal btn btn-gray btn-sm" data-no="' + guestVO.no + '">삭제</button>';
+		str += '			</td>'
 		str += '		</tr>';
 		str += '		<tr>';
 		str += '			<td colspan=4>' + guestVO.content + '</td>';
