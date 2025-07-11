@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,18 @@ public class GuestbookApiController {
 		System.out.println(gList);
 
 		return gList;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/api/guestbook/add", method = { RequestMethod.GET, RequestMethod.POST })
+	public GuestVO add(@ModelAttribute GuestVO guestVO) {
+		System.out.println("GuestbookApiController.add()");
+		System.out.println(guestVO);
+		
+		//guestVO(3) --> gVO(4)
+		GuestVO gVO = guestbookService.exeAddKey(guestVO);
+
+		return gVO;
 	}
 
 }

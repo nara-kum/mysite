@@ -40,7 +40,7 @@
 				</div>
 
 				<div id="guestbook-addlist">
-					<form class="form-box" action="${pageContext.request.contextPath}/guestbook/add" method="get">
+					<form id="formAdd" class="form-box" action="" method="get">
 						<table>
 							<colgroup>
 								<col style="width: 70px;">
@@ -68,7 +68,6 @@
 
 						</table>
 					</form>
-					<button id="btnList" class="btn btn-blue btn-md" type="button">전체 데이터 요청</button>
 					
 					<div id="gbListArea">
 					
@@ -108,10 +107,48 @@
 	$(document).ready(function(){
 		console.log('돔');
 
-		$('#btnList').on('click',function(){
-			console.log('전체 데이터 리스트');
+		//리스트 데이터 요청해서 그리는 함수
+		fetchList();
 		
-			fetchList();
+		//전송버튼 클릭할때
+		$('#formAdd').on('submit',function(event){
+			console.log('등록버튼');
+			event.preventDefault();
+
+			let name = $('#txt-name').val();
+			let password = $('#txt-password').val();
+			let content = $('#text-content').val();
+
+			let guestVO = {
+				name: name,
+				password: password,
+				content: content
+			};
+
+			console.log(guestVO);
+
+			$.ajax({
+			
+				//보낼때 옵션
+				url : "${pageContext.request.contextPath}/api/guestbook/add",
+				type : "post",
+				// contentType : "application/json",
+				data : guestVO,
+
+				//받을때 옵션
+				dataType : "json",
+				success : function(guestVO){
+					//화면 그리기
+					rander(guestVO, 'up');
+					//폼 비우기
+					$('#txt-name').val('');
+					$('#txt-password').val('');
+					$('#text-content').val('');
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
 		});
 	});
 
@@ -132,7 +169,7 @@
 
 				//화면에 그린다
 				for(let i=0; i<guestVO.length; i++){
-					rander(guestVO[i]);
+					rander(guestVO[i], 'down');
 				}
 				
 			},
@@ -142,7 +179,7 @@
 		});
 	};
 
-	function rander(guestVO){
+	function rander(guestVO, updown){
 		console.log(guestVO);
 		console.log('그린다');
 
@@ -167,7 +204,11 @@
 		str += '	</tbody>';
 		str += '</table>';
 		
-		$('#gbListArea').append(str);
+		if(updown == 'up'){
+			$('#gbListArea').prepend(str);
+		}else if(updown == 'down'){
+			$('#gbListArea').append(str);
+		}
 	};
 </script>
 </body>

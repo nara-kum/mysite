@@ -14,6 +14,7 @@ public class GuestbookService {
 	@Autowired
 	private GuestbookRepository guestbookRepository;
 	
+	//불러오기
 	public List<GuestVO> exeList() {
 		System.out.println("guestbookService.exeAddList()");
 		
@@ -23,6 +24,7 @@ public class GuestbookService {
 		
 	}
 	
+	//저장
 	public int exeAdd(GuestVO guestVO) {
 		System.out.println("GuestbookService.exeAdd()");
 		
@@ -32,6 +34,21 @@ public class GuestbookService {
 		
 	}
 	
+	//저장 하고 키값 가져와
+	public GuestVO exeAddKey(GuestVO guestVO) {
+		System.out.println("GuestbookService.exeAddKey()");
+
+		//저장
+		int count = guestbookRepository.insertKeyGuest(guestVO);
+		
+		//추가된 방명록 가져오기
+		GuestVO gVO = guestbookRepository.selectOneGuest(guestVO.getNo());
+		
+		return gVO;
+		
+	}
+	
+	//삭제
 	public int exeRemove(GuestVO guestVO) {
 		System.out.println("GuestbookService.exeRemove()");
 		
