@@ -27,6 +27,7 @@ public class GuestbookRepository {
 	
 	//저장
 	public int insertGuest(GuestVO guestVO) {
+		
 		System.out.println("uestbookRepository.insertGuest()");
 		
 		int count = sqlSession.insert("guest.insert",guestVO);

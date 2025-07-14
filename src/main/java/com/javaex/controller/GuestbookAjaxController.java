@@ -11,7 +11,7 @@ public class GuestbookAjaxController {
 	public String ajaxIndex() {
 		System.out.println("GuestbookAjaxController.ajaxIndex()");
 		
-		return "ajaxjuestbook/index";
+		return "ajaxguestbook/index";
 	}
 
 }
