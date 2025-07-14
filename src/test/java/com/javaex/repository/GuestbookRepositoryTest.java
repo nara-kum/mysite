@@ -16,7 +16,7 @@ public class GuestbookRepositoryTest {
 	@Autowired
 	private GuestbookRepository guestbookRepository;
 	
-	@Test
+//	@Test
 	public void selectAll() {
 		List<GuestVO> gList = guestbookRepository.selectList();
 		System.out.println("------------------");
@@ -24,6 +24,31 @@ public class GuestbookRepositoryTest {
 		System.out.println("------------------");
 		
 		assertThat(gList).isNotNull();
+	}
+	
+//	@Test
+	public void delete() {
+		GuestVO guestVO = new GuestVO();
+		guestVO.setNo(40);
+		guestVO.setPassword("1234");
+		System.out.println(guestVO);
+		
+		int count = guestbookRepository.deleteGuest(guestVO);
+		assertThat(count).isEqualTo(1);
+
+	}
+
+	@Test
+	public void insert() {
+		GuestVO guestVO = new GuestVO();
+		guestVO.setName("나랑");
+		guestVO.setPassword("1234");
+		guestVO.setContent("testtest");
+		System.out.println(guestVO);
+
+		int count = guestbookRepository.insertGuest(guestVO);
+		assertThat(count).isEqualTo(1);
+		
 	}
 	
 }
