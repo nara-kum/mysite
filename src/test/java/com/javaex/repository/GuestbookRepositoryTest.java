@@ -27,16 +27,16 @@ public class GuestbookRepositoryTest {
 	}
 	
 //	@Test
-	public void delete() {
-		GuestVO guestVO = new GuestVO();
-		guestVO.setNo(40);
-		guestVO.setPassword("1234");
-		System.out.println(guestVO);
-		
-		int count = guestbookRepository.deleteGuest(guestVO);
-		assertThat(count).isEqualTo(1);
-
-	}
+//	public void delete() {
+//		GuestVO guestVO = new GuestVO();
+//		guestVO.setNo(40);
+//		guestVO.setPassword("1234");
+//		System.out.println(guestVO);
+//		
+//		int count = guestbookRepository.deleteGuest(guestVO);
+//		assertThat(count).isEqualTo(1);
+//
+//	}
 
 	@Test
 	public void insert() {
