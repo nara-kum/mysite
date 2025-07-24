@@ -35,8 +35,17 @@ public class GalleryService {
 	public String exeUpload(MultipartFile file, GalleryVO galleryVO) {
 		System.out.println("GalleryService.exeUpload()");
 		
-//		String savaDir = "C:\\javaStudy\\galleryupload\\";
-		String savaDir = "/data/upload/";
+		//현재 os 정보
+		String osName = System.getProperty("os.name").toLowerCase();
+		
+		//파일저장경로
+		String savaDir = "";
+		
+		if(osName.contains("win")) {//윈도우면
+			savaDir = "C:\\javaStudy\\galleryupload\\";
+		}else {//리눅스면
+			savaDir = "/data/upload/";
+		}
 		
 		//1.파일정보 추출 저장(DB)
 		//오리지널 파일명
