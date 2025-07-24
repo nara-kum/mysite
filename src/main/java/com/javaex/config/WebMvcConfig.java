@@ -15,9 +15,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		
+		//현재 os 정보
+		String osName = System.getProperty("os.name").toLowerCase();
+		String resourceLocation = "";
+		
+		if(osName.contains("win")) {//윈도우면
+			resourceLocation = "file:///C:/javaStudy/galleryupload/";
+		}else {//리눅스면
+			resourceLocation = "file:/data/upload//";
+		}
+		
         registry.addResourceHandler("/galleryupload/**")
-//                .addResourceLocations("file:///C:/javaStudy/galleryupload/");
-        		.addResourceLocations("file:/data/upload/");
+        		.addResourceLocations(resourceLocation);
     }
 }
 
