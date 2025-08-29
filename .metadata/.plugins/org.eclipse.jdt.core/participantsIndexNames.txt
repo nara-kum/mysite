@@ -1,0 +1,11 @@
+INDEX VERSION 1.134
+C:\javaStudy\workspace_boot\mysite\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2320067987.index
+\phonebook4\src\main\java
+C:\javaStudy\workspace_boot\mysite\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1133655658.index
+\JavaExam07\src\main\java
+C:\javaStudy\workspace_boot\mysite\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\471526101.index
+\JavaExam08\src\main\java
+C:\javaStudy\workspace_boot\mysite\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3897165445.index
+\guestbook4\src\main\java
+C:\javaStudy\workspace_boot\mysite\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1378568018.index
+\guestbook4\src\main\java
